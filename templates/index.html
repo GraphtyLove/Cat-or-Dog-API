@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dog or Cat ?</title>
+</head>
+<body>
+<h1>Upload here a picture of a cat or a dog</h1>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" accept="image/png, image/jpeg" name="file" id="file" />
+    <button onclick="sendDataToServerqscqscqscq()" value="Predict"> GO </button>
+</form>
+
+<p id="prediction"></p>
+<script>
+    function sendDataToServerqscqscqscq() {
+        let dataToSend = document.getElementById('file')
+
+        let formData = new FormData();
+        formData.append('image', dataToSend[0]);
+
+        // Make the POST request
+        fetch('http://127.0.0.1:5000/predict',{
+            headers: {
+                'Content-Type': ' multipart/form-data',
+            },
+            method: 'POST',
+            body: formData,
+        })
+            // Get the response of the API
+            .then(response => response.json())
+            // Display the response
+            .then(response => {
+                console.log('Response: ', response)
+                if (response[0] === 1) {
+                    document.getElementById('prediction').innerHTML =
+                        "It's Dog!"
+                } else {
+                    document.getElementById('prediction').innerHTML =
+                        "It's a cat!"
+                }
+            })
+            .catch(error => {
+                console.error('Error: ', error)
+                document.getElementById('prediction').innerHTML = error
+            })
+    }
+</script>
+</body>
+</html>
