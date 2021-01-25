@@ -62,7 +62,7 @@ def train_model():
                   metrics=['accuracy'])
 
     model.fit_generator(train_generator,
-                        epochs=2,
+                        epochs=20,
                         validation_data=valid_generator,
                         callbacks=callbacks)
     model_evaluation = model.evaluate(valid_generator)
