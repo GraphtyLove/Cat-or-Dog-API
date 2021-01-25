@@ -6,6 +6,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 
 MODEL_PATH = os.path.dirname(os.path.realpath(__file__)) + '/saved_models/model.h5'
+OUPUT_PATH = "/output.txt"
 
 callbacks = [
     EarlyStopping(monitor='val_loss',
@@ -61,9 +62,28 @@ def train_model():
                   metrics=['accuracy'])
 
     model.fit_generator(train_generator,
-                        epochs=80,
+                        epochs=2,
                         validation_data=valid_generator,
                         callbacks=callbacks)
+    model_evaluation = model.evaluate(valid_generator)
+    
+    ouput_evaluation = {
+        "class_1": model_evaluation[0],
+        "class_2": model_evaluation[1]
+    }
 
-    return 'Model Trained!'
+    print("Model evaluation: ", ouput_evaluation)
 
+    with open(OUPUT_PATH, 'w') as f:
+        f.write(str(ouput_evaluation))
+    
+    print("Evaluation done.")
+    
+    return {
+        "model_path": MODEL_PATH,
+        "output_file": OUPUT_PATH
+    }
+
+if __name__ == "__main__":
+    output = train_model()
+    print(output)
