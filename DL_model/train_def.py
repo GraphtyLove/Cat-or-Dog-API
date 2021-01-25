@@ -5,6 +5,9 @@ from tensorflow.keras.layers import Dense, Flatten, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 
+DOCKER_MODEL_VOLUME = os.environ.get("MODEL_VALUME", '.')
+DOCKER_OUTPUT_VOLUME = os.environ.get("OUTPUT_VALUME", '.')
+
 MODEL_PATH = os.path.dirname(os.path.realpath(__file__)) + '/saved_models/model.h5'
 OUPUT_PATH = "/output.txt"
 

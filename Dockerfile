@@ -6,6 +6,8 @@ FROM python:3.7.3-stretch
 RUN mkdir /app
 WORKDIR /app
 
+ENV DOCKER_MODEL_VOLUME = "/model"
+ENV DOCKER_OUTPUT_VOLUME = "/output"
 
 # Copy the requirement txt in the working directory and install all the dependencies
 # We make this first to throw error there if there is an error while installing dependencies
